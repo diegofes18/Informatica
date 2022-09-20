@@ -11,7 +11,7 @@ def count():
     print("Thread {}".format(threading.current_thread().name))
     for i in range(MAX_COUNT//THREADS):
         n += 1
-
+    print(f"El procés {threading.current_thread().name} ha comptat fins a {n}")
 def main():
     threads = []
     for i in range(THREADS):

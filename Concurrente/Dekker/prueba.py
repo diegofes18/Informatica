@@ -1,34 +1,72 @@
-import threading 
+import random
+import time
+from threading import Thread
 
-#Constants
-THREADS = 2
-MAX_COUNT = 1000000
+# Constants
+MAX_TO_COUNT = 10000000
+COUNT_LOOPS = 100
+NTHREADS = 2
+PROBLEM = True
 
+# Variable global que indica el desig de cada procés d'entrar a la regió crítica
+want = [False, False]
+
+# Varibale compartida a manipular
 counter = 0
-torn = 1 
 
-def count():
+# Classe que hereta de threading.Trhead. Defineix el comportament dels fils
+class MyThread(Thread):
 
-    global counter
-    #SECCIÓ CRITICA
-    print(" {}".format(getTorn(threading.current_thread().name)))
-    for i in range(MAX_COUNT//THREADS):
-        counter += 1 
+    def __init__(self, id):
+        super().__init__()
+        self.id = id
 
-def getTorn(str):
-    return str[7]
+    # Mètode que executen els fils
+    def run(self):
+
+        global want
+        global counter
+        max = (MAX_TO_COUNT // NTHREADS) // COUNT_LOOPS
+
+        other = (self.id % 2)
+
+        for i in range(COUNT_LOOPS):
+
+            ### REGIÓ NO CRÍTICA ###
+
+            ### PREPROTOCOL ###
+            # Espera activa mentre no tengui el torn
+            while want[other]:
+                pass
+
+            if PROBLEM and self.id == 1:
+                time.sleep(0.00000000001)
+
+            want[self.id - 1] = True
+
+            ### REGIÓ CRÍTICA ###
+            for i in range(max):
+                counter += 1
+
+            ### POSTPROTOCOL ###
+            print(f"El procés {self.id} ha comptat fins a {counter}")
+            want[self.id - 1] = False
 
 
+
+# Programa principal
 def main():
-    threads = []
-    for i in range(THREADS):
-        t = threading.Thread(target=count)
-        threads.append(t) 
-        t.start()
+    processes = [MyThread(1), MyThread(2)]
 
-    for t in threads:
-        t.join()
-    print("Counter value: {} Expected: {}\n".format(counter,MAX_COUNT))
+    p, q = processes
+
+    p.start()
+    q.start()
+
+    p.join()
+    q.join()
+
+    print(f"Valor real: {counter}\nValor esperat: {MAX_TO_COUNT}")
 
 if __name__ == "__main__":
     main()

@@ -14,9 +14,10 @@ def count():
     num = getTorn(threading.current_thread().name)-1
     
     #PREPROTOCOL
+    wantx[(num+1)%2] = True
+
     while wantx[num]:
         pass
-    wantx[(num+1)%2] = True
     
     #SECCIÓ CRITICA
     print("Thread {}".format(getTorn(threading.current_thread().name)))
