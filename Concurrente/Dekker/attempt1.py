@@ -1,7 +1,7 @@
 import threading 
 
 #Constants
-THREADS = 2
+THREADS = int(input("Introdueix el numero de fils:"))
 MAX_COUNT = 1000000
 
 counter = 0
@@ -20,7 +20,7 @@ def count():
         counter += 1 
 
     #POSTPROTOCOL
-    print(f"El procés {threading.current_thread().name} ha comptat fins a {counter}")
+    #print(f"El procés {threading.current_thread().name} ha comptat fins a {counter}")
     torn = (torn % THREADS) + 1
 
 def getTorn(str):

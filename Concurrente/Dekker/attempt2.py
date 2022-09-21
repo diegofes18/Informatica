@@ -1,7 +1,7 @@
 import threading 
 
 #Constants
-THREADS = 2
+THREADS = int(input("Introdueix el numero de fils:"))
 MAX_COUNT = 1000000
 
 counter = 0
@@ -24,7 +24,7 @@ def count():
         counter += 1 
 
     #POSTPROTOCOL
-    print(f"El procés {num+1} ha comptat fins a {counter}")
+    #print(f"El procés {num+1} ha comptat fins a {counter}")
     wantx[(num+1)%2] = False 
 
     
