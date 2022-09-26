@@ -13,20 +13,21 @@ def count():
     global counter
     num = getTorn(threading.current_thread().name)-1
     
-    
+    #PREPROTOCOL
+    wantx[num] = True
+
+    while wantx[(num+1)%2]:
+        wantx[num] = False
+        wantx[num] = True
     
     #SECCIÓ CRITICA
     print("Thread {}".format(getTorn(threading.current_thread().name)))
     for i in range(MAX_COUNT//THREADS):
-        #PREPROTOCOL
-        while wantx[(num+1)%2]:
-            pass
-        wantx[num] = True
         counter += 1 
 
-        #POSTPROTOCOL
-        #print(f"El procés {num+1} ha comptat fins a {counter}")
-        wantx[num] = False 
+    #POSTPROTOCOL
+    #print(f"El procés {num+1} ha comptat fins a {counter}")
+    wantx[num] = False 
 
     
 
