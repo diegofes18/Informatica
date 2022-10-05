@@ -39,7 +39,22 @@ class Aspirador(agent.Agent):
 class AspiradorReflex(Aspirador):
     def actua(self, percep: entorn.Percepcio) -> entorn.Accio:
         """ IMPLEMENTAR """
-        pass
+
+        if ((percep[ClauPercepcio.LOC] == Localitzacio.HABITACIO_ESQ) and (
+                percep[ClauPercepcio.ESTAT] == EstatHabitacio.BRUT)):
+            # NETEJA
+            return AccionsAspirador.ASPIRA
+        if ((percep[ClauPercepcio.LOC] == Localitzacio.HABITACIO_ESQ) and (
+                percep[ClauPercepcio.ESTAT] == EstatHabitacio.NET)):
+            return AccionsAspirador.DRETA
+        if ((percep[ClauPercepcio.LOC] == Localitzacio.HABITACIO_DRET) and (
+                percep[ClauPercepcio.ESTAT] == EstatHabitacio.BRUT)):
+            # NETEJA
+            return AccionsAspirador.ASPIRA
+        if ((percep[ClauPercepcio.LOC] == Localitzacio.HABITACIO_DRET) and (
+                percep[ClauPercepcio.ESTAT] == EstatHabitacio.NET)):
+            return AccionsAspirador.ESQUERRA
+
 
 
 class AspiradorTaula(Aspirador):
