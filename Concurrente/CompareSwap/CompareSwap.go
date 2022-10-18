@@ -21,7 +21,7 @@ var (
 
 func lock() {
     local = 0;
-	while !atomic.CompareAndSwapInt32(mutex, local,1){
+	while !atomic.CompareAndSwapInt32(mutex, local, 1){
 		local = 0
 	}
 }
