@@ -1,0 +1,150 @@
+
+"""
+CONSTANTS PER MOURE I ELS REUS COSTOS
+"""
+COST_DESPL=1
+COST_ESPERAR=0.5
+COST_BOTAR=6
+
+from ia_2022 import entorn
+from practica1 import joc
+from entorn import *
+
+class Estat:
+    def __init__(self,posPizza,posAgent,parets,pes=0,pare=None):
+        self.__pos_ag = posAgent
+        self.__pos_pizza = posPizza
+        self.__parets = parets
+        self.__pes = pes
+        self.__pare = pare
+
+    def get_pos_ag(self):
+        return self.__pos_ag
+
+    def calcula_heuristica(self):
+        sum=0
+        for i in range(2):
+            sum+=abs(self.__pos_pizza[0] - self.__pos_ag['Miquel'][i])
+        return self.__pes+sum
+
+    def es_valid(self):
+        #claus = list(self.__pos_ag.keys())
+        # mirar si hi ha parets
+        if self.__pos_ag in self.__parets:
+            return False
+
+        return (self.__pos_ag['Miquel'][0] <= 7) and (self.__pos_ag['Miquel'][0] >= 0) \
+               and (self.__pos_ag['Miquel'][1] <= 7) and (self.__pos_ag['Miquel'][1] >= 0)
+
+    def es_meta(self):
+        return (self.__pos_ag['Miquel'][0] == self.__pos_pizza[0])and(self.__pos_ag['Miquel'][1] == self.__pos_pizza[1])
+
+    def get_pos_pizza(self):
+        return self.__pos_pizza
+
+    def genera_fills(self):
+        movs={"ESQUERRE":(-1,0),"DRETA":(+1,0),"DALT": (0,+1),"BAIX": (0,-1)}
+        claus=list(movs.keys())
+        fills=[]
+
+        for i, m in enumerate(movs.values()):
+            coords = [sum(tup) for tup in zip(self.__pos_ag['Miquel'], m)]
+            coord = {'Miquel': coords}
+            # coords=[(0,0)]
+            cost = self.calcula_heuristica() + COST_DESPL
+            actual = Estat(self.__pos_pizza, coord, self.__parets, cost,
+                           (self, (AccionsRana.MOURE, Direccio.__getitem__(claus[i]))))
+            if (actual.es_valid()):
+                fills.append(actual)
+
+
+        movs = {"ESQUERRE": (-2,0), "DRETA": (+2,0), "DALT": (0,+2), "BAIX": (0,-2)}
+        for i, m in enumerate(movs.values()):
+            coords = [sum(tup) for tup in zip(self.__pos_ag['Miquel'], m)]
+            coord = {'Miquel': coords}
+            cost = self.calcula_heuristica() + COST_BOTAR
+            actual = Estat(self.__pos_pizza, coord, self.__parets, cost,
+                           (self, (AccionsRana.BOTAR, Direccio.__getitem__(claus[i]))))
+            if (actual.es_valid()):
+                fills.append(actual)
+
+        return fills
+
+
+
+class Rana(joc.Rana):
+    def __init__(self, *args, **kwargs):
+        super(Rana, self).__init__(*args, **kwargs)
+        self.__tancats = None
+        self.__oberts = None
+        self.__accions = None
+        self.__torn = 0
+
+    def pinta(self, display):
+        pass
+
+    def cerca_prof(self, estat: Estat):
+        self.__oberts = []
+        self.__tancats = set()
+
+        self.__oberts.append(estat)
+
+        actual = None
+        while len(self.__oberts) > 0:
+            actual = self.__oberts.pop()
+            if actual in self.__tancats:
+                continue
+
+            if not actual.es_valid():
+                self.__tancats.add(actual)
+                continue
+
+            estats_fills = actual.genera_fills()
+
+            if actual.es_meta():
+                break
+
+            for estat_f in estats_fills:
+                self.__oberts.append(estat_f)
+
+            self.__tancats.add(actual)
+        if actual is None:
+            raise ValueError("Error impossible")
+
+        if actual.es_meta():
+            accions = []
+            iterador = actual
+
+            while iterador.pare is not None:
+                pare, accio = iterador.pare
+
+                accions.append(accio)
+                iterador = pare
+            self.__accions = accions
+            return True
+        else:
+            return False
+
+    def actua(
+            self, percep: entorn.Percepcio
+    ) -> entorn.Accio | tuple[entorn.Accio, object]:
+
+            percepciones = percep.to_dict()
+            key = list(percepciones.keys())
+            state = Estat(percep[key[0]],percep[key[1]], percep[key[2]])
+
+            if self.__accions is None:
+                self.cerca_prof(state)
+
+            if self.__accions:
+                if(self.__torn>0):
+                    self.__torn-=1
+                    return AccionsRana.ESPERAR
+                else:
+                    acc=self.__accions.pop()
+                    if(acc[0]==AccionsRana.BOTAR):
+                        self.__torn=2
+                    #retornam acció i direcció
+                    return acc[0],acc[1]
+            else:
+                return AccionsRana.ESPERAR
