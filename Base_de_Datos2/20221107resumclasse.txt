@@ -1,0 +1,62 @@
+delimiter //
+create procedure fact(in num int, out resultat int)
+begin
+  set resultat = 1;
+  while num > 0 do
+     set resultat=resultat*num;
+     set num = num - 1;
+  end while;
+end;
+
+-> call fact(5,a)
+
+====================================
+
+LLegir taula de mascotes i guardar les mascotes
+del tipus indicat dintre
+d'una taula especial 
+
+create table seleccion (
+   nommascota char(10),
+   idprop  int
+)
+
+delimiter //
+create procedure splittipus(IN tipus char(10))
+begin
+ DECLARE lnom, ltipus CHAR(10);
+ DECLARE lprop INT;
+ DECLARE hihaerror INT DEFAULT 0;
+ DECLARE varcursor CURSOR FOR 
+	SELECT nommasc,tipusmasc,propmasc
+ 	FROM mascota;
+ DECLARE CONTINUE HANDLER FOR NOT FOUND SET hihaerror=1;
+
+ TRUNCATE seleccion;
+
+ OPEN varcursor;
+ sergio: loop
+   FETCH varcursor INTO lnom, ltipus, lprop;
+   IF hihaerror THEN 
+     LEAVE sergio;
+   END IF;
+   IF ltipus = tipus THEN
+     INSERT INTO seleccion SET
+       nommascota = lnom,
+       idprop = lprop;
+   END IF;
+ end loop;
+ CLOSE varcursor;
+
+end;
+
+call splittipus("ca");
+
+==========================
+
+Crear un procediment que catalogui els propietaris de la següent manera:
+Si tenen 3 o més mascotes, VIP=1;
+Si tenen 2 mascotes, VIP=2;
+si tenen 2 o manco, VIP=3
+
+ALTER TABLE propietari ADD vip INT

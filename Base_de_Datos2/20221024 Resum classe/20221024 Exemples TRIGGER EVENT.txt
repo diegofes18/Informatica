@@ -1,0 +1,58 @@
+Vista que mostra els cans:
+create view cans
+as
+select * from mascota where tipusmasc="ca"
+---------------
+Vista que mostri la llista
+de propietaris de cans, mostrant:
+- nom mascota
+- nom i llinatges del propietari
+Afecta a taules:
+- mascota
+- propietari
+
+create view propietaridecans as
+select nommasc, nomprop, lliprop
+from mascota inner join propietari
+on mascota.propmasc = propietari.idprop
+where mascota.tipusmasc = "ca"
+
+create view propietaridecans2 as
+select 
+nommasc as MASCOTA,
+concat(nomprop, " ", lliprop) as PROPIETARI
+from mascota inner join propietari
+on mascota.propmasc = propietari.idprop
+where mascota.tipusmasc = "ca"
+-----------------------
+vista materialitzada de cans:
+create table vistacans
+as select * from mascota where tipusmasc="ca"
+------------------
+
+update vistacans set tipusmasc="moix"
+where idmasc=1
+------------------------------
+create trigger modifica
+before/after insert 
+on histories
+for each row
+accions a desenvolupar;
+--------------------
+create event copia
+on schedule
+every 5 minute
+starts "2022-10-24 22:00:00"
+do
+accions
+---------------
+create table canvis (
+contador int
+);
+
+insert into canvis set contador=0;
+
+create trigger acumula 
+after update on visita
+for each row
+update canvis set contador=contador + 1;
