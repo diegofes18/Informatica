@@ -1,0 +1,14 @@
+principal(){
+boolea fin=fals;
+boolea cond=cert;
+enter y=0;
+mentres(no!fin){
+ si(cond and no!fin){
+ y = y+1;
+  }
+ si(y == 10){
+  fin = cert;
+  }
+ }
+sortidaPantalla(y);
+}

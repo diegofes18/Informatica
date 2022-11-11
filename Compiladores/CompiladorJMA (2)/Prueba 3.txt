@@ -1,0 +1,12 @@
+func boolea esMayorQue5(enter x){
+boolea b = fals;
+si(x>5){
+b = cert;
+}
+retorna b;
+}
+principal(){
+enter z = 10;
+boolea b = esMayorQue5(z);
+sortidaPantalla(b);
+}
