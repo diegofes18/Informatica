@@ -1,0 +1,80 @@
+create database 20221114banc
+
+create table compte (
+   id int primary key,
+   usuari int,
+   saldo int(8.2)
+);
+
+insert into compte
+(id, usuari,saldo)
+values
+(1,11,1500),
+(2,22,2500),
+(3,33,10000);
+
+Traspassam 500 de 2->1
+set autocommit=off;
+start transaction;
+   update compte set saldo=saldo+500 where id=1;
+   update compte set saldo=saldo-500 where id=2;
+commit;
+
+
+esq 
+update compte set saldo=60000 where id=2;
+
+   set autocommit=off;
+start transaction;
+   update compte set saldo=saldo+500 where id=1;
+   update comptes set saldo=saldo-500 where id=2;
+commit;
+
+crear un procediment de nom 
+traspassa(numcompteorigen, numcomptedesti, import)
+que faci un traspàs amb TRANSACTION entre origen i desti
+
+delimiter //
+create procedure traspassa(IN origen INT, IN desti INT, IN imp INT(8.2))
+begin
+  set autocommit=off;
+  start transaction;
+     update compte set saldo=saldo+imp where id=desti;
+     update compte set saldo=saldo-imp where id=origen;
+  commit;
+end;
+
+-> call traspassa(2,3,1000);
+update compte set saldo=1500 where id=1;
+update compte set saldo=2500 where id=2;
+update compte set saldo=10000 where id=3;
+
+call traspassa(3,2,1000);
+
+delimiter //
+create procedure traspassa(IN origen INT, IN desti INT, IN imp INT(8.2))
+begin
+  set autocommit=off;
+  start transaction;
+     update compte set saldo=saldo+imp where id=desti;
+     update comptesssss set saldo=saldo-imp where id=origen;
+  commit;
+end;
+
+
+
+delimiter //
+create procedure traspassa(IN origen INT, IN desti INT, IN imp INT(8.2))
+begin
+  declare exit handler for sqlexception rollback;
+
+  set autocommit=off;
+  start transaction;
+     update compte set saldo=saldo+imp where id=desti;
+     update comptesssss set saldo=saldo-imp where id=origen;
+  commit;
+end;
+
+
+
+
