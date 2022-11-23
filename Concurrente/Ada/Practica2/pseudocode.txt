@@ -1,0 +1,48 @@
+entry demanaTaula_F('nom') when(lliures>0)or (fumadors>0):
+index=0
+i=0
+while(!trobat){
+     if(taula[i].capacitat>0 and taula[i].tipus=LLIURE/FUMADOR{
+    index=i
+    trobat=True
+      }
+}
+taula[index].capacitat--
+if(capacitat==2){
+   taula[index].tipus=FUMADOR
+}
+
+for i;i>0;i++  {
+if(sala[i]=='BUIT'){
+sala[index].arraynoms[i]=nom
+}
+
+
+senva('nom'){
+
+}
+
+
+
+ATRIBUTOS:
+-lliures=3
+-no_f=0
+-f=3
+-array sales(1..3) is type of taula
+sala record{
+tipus="LLIURE",
+capacitat,
+array_noms
+}
+
+task type Fumador(nom)
+
+task type noFumador(nom)
+
+task body is
+put_Line("BONDIA SOM EN DIEGO")
+delay(rand)
+monitor.demanaTaulaF(nom)
+delay()
+monitor.senva
+end noFumador; 
