@@ -1,0 +1,57 @@
+CREATE DATABASE 20221121persones;
+CREATE TABLE persona (
+ idpers INT AUTO_INCREMENT PRIMARY KEY,
+ nom CHAR(25),
+ correu CHAR(15),
+ darrer CHAR(15)
+);
+CREATE TABLE log (
+    idpersona INT,
+    darrer  CHAR(15),
+    FOREIGN KEY (idpersona) REFERENCES persona(idpers)
+);
+INSERT INTO persona (nom,correu,darrer) VALUES ("Antoni","antoni@","jj");
+
+DELIMITER //
+CREATE TRIGGER modificalog
+AFTER UPDATE ON persona
+FOR EACH ROW
+BEGIN
+    INSERT into log VALUES(OLD.idpers,OLD.darrer);
+END;
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE TRIGGER nomtrigger
+BEFORE/AFTER INSERT/DELETE/UPDATE ON nomtaula
+FOR EACH ROW
+BEGIN
+    // NEW.darrer conté el nou valor de PERSONA
+
+END;
+
+
+
+exercici event 01
+1) by diego & alex
+CREATE TABLE  dones AS 
+SELECT *
+FROM persona
+WHERE sexe = 'D';
+
+2)
+delimiter //
+create event ex2
+on schedule every 1 minute
+starts "2022-11-21 20:00:00"
+do
+   update persona set comptador=comptador+1 where sexe="H";
+
+Pensar a fer: 
+set global event_scheduler=on;
