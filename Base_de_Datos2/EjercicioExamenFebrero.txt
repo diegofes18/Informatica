@@ -1,0 +1,69 @@
+--Base de datos
+
+CREATE TABLE cadena(
+idcadena INT PRIMARY KEY,
+descadena VARCHAR(15));
+    
+CREATE TABLE programa(
+idprog INT PRIMARY KEY,
+nomprog VARCHAR(30),
+episodi VARCHAR(30),
+preu INT);
+
+CREATE TABLE client(
+idcli INT PRIMARY KEY,
+nomcli VARCHAR(15),
+factura INT);
+CREATE TABLE emissió(
+programa INT,
+cadena INT,
+data DATE, hora TIME,
+FOREIGN KEY (programa) REFERENCES programa (idprog),
+FOREIGN KEY (cadena) REFERENCES cadena(idcadena));
+
+CREATE TABLE llista(
+idllista INT PRIMARY KEY,
+client INT,
+programa INT,
+comentari VARCHAR(30),
+FOREIGN KEY (client) REFERENCES client(idcli),
+FOREIGN KEY (programa) REFERENCES programa(idprog));
+
+1)
+ Expliqui la principal diferència entre els TRIGGER i els EVENT i generi una acció (TRIGGER o EVENT,
+la que consideri més adient) automàtica d'SQL que, cada vegada que es modifiqui un element de la taula
+PROGRAMA, modifiqui l'atribut COMENTARI, posant el text "Modificació de programa", a totes les aparicions
+d'aquest programa a la taula LLISTA.
+
+--
+
+CREATE TRIGGER comentar 
+AFTER UPDATE ON programa
+FOR EACH ROW 
+BEGIN
+	UPDATE llista SET comentari="xxx" WHERE llista.programa=NEW.idprog;
+END;
+
+2)
+
+Generi el codi d'un SELECT que calculi, per al programa de nom (nomprog) "Callejeros Viajeros", la
+descripció de les cadenes (DESCADENA) on s'emet i el total d'emissions a cada cadena. El resultat s'ha d'ordenar
+de major a menor quantitat d'emissions
+--
+
+SELECT descadena,COUNT(*) as emisiones
+FROM emissió JOIN cadena
+ON emissió.cadena = cadena.idcadena
+WHERE emissió.programa IN (SELECT programa.idprog
+                           FROM programa
+                           WHERE programa.nomprog="Callejeros Viajeros")
+GROUP BY emissió.cadena
+ORDER BY emisiones DESC;
+--
+SELECT descadena,COUNT(*) as num_emissions 
+FROM ((SELECT emissió.cadena FROM  emissió WHERE emissió.programa = (SELECT idprog FROM programa WHERE programa.nomprog="Callejeros Viajeros"))as emissions JOIN cadena
+ON emissions.cadena=cadena.idcadena)
+GROUP BY cadena.descadena
+ORDER BY num_emissions DESC;
+
+
