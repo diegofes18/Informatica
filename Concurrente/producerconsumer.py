@@ -7,6 +7,7 @@ BUFFER_SIZE = 10
 PRODUCERS = 2
 CONSUMERS = 2
 
+
 class ProducerConsumer(object):
     def __init__(self, size): #constructor
         #deque doble cua permet treure i afegir left right
