@@ -15,7 +15,7 @@ const (
 
 var prodnames = [Productores]string{"Ferran","Miquel","Tomeu","Toni"}
 var consnames = [Consumidores]string{"Sara", "Maria","Gloria","Xisca"}
-
+var counter = 0
 
 func failOnError(err error, msg string) {
 	if err != nil {
@@ -40,6 +40,10 @@ func consumer(id int, name string, ch *amqp.Channel, q amqp.Queue) {
 		log.Printf("Consumer %d , %s Received a message: %s", id, name, d.Body)
 		rand.Seed(time.Now().UnixNano())
 		time.Sleep(time.Duration(rand.Intn(2000)) * time.Millisecond)
+                counter := counter +1
+                if(counter == 2){
+                        break;
+                }
 	}
 }
 
