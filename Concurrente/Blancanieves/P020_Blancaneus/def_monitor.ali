@@ -1,0 +1,124 @@
+V "GNAT Lib v2020"
+P ZX
+
+RN
+RV SIMPLE_BARRIERS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTION_PROPAGATION
+RV NO_EXCEPTIONS
+RV NO_IO
+RV NO_PROTECTED_TYPES
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV MAX_PROTECTED_ENTRIES=2
+
+U def_monitor%b		def_monitor.adb		6d68ec05 NE OO PK IL
+W ada%s			ada.ads			ada.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+Z system%s		system.ads		system.ali
+Z system.concat_4%s	s-conca4.adb		s-conca4.ali
+Z system.img_int%s	s-imgint.adb		s-imgint.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+Z system.tasking.protected_objects%s  s-taprob.adb  s-taprob.ali
+Z system.tasking.protected_objects.entries%s  s-tpoben.adb  s-tpoben.ali
+Z system.tasking.protected_objects.operations%s  s-tpobop.adb  s-tpobop.ali
+
+U def_monitor%s		def_monitor.ads		cf436213 EE NE OO PK IL
+Z ada.exceptions%s	a-except.adb		a-except.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+Z system%s		system.ads		system.ali
+Z system.tasking%s	s-taskin.adb		s-taskin.ali
+Z system.tasking.protected_objects%s  s-taprob.adb  s-taprob.ali
+Z system.tasking.protected_objects.entries%s  s-tpoben.adb  s-tpoben.ali
+
+D ada.ads		20200819050642 76789da1 ada%s
+D a-except.ads		20200819050642 a7106115 ada.exceptions%s
+D a-finali.ads		20200819050642 bf4f806b ada.finalization%s
+D a-ioexce.ads		20200819050642 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20200819050642 119b8fb3 ada.streams%s
+D a-tags.ads		20200819050643 edddc8f0 ada.tags%s
+D a-textio.ads		20200819050643 aef4d56d ada.text_io%s
+D a-unccon.ads		20200819050643 0e9b276f ada.unchecked_conversion%s
+D def_monitor.ads	20191028170652 cf436213 def_monitor%s
+D def_monitor.adb	20191028171549 0cdf5b7b def_monitor%b
+D interfac.ads		20200819050644 5ab55268 interfaces%s
+D i-c.ads		20200819050644 c624fa43 interfaces.c%s
+D i-cstrea.ads		20200819050644 e53d8b8e interfaces.c_streams%s
+D system.ads		20200819050647 085b6ffb system%s
+D s-atacco.ads		20200819050645 4c36d12f system.address_to_access_conversions%s
+D s-conca4.ads		20200819050645 7e642b20 system.concat_4%s
+D s-crtl.ads		20200819050645 0ebbdb71 system.crtl%s
+D s-exctab.ads		20200819050645 54135002 system.exception_table%s
+D s-ficobl.ads		20200819050645 078245e4 system.file_control_block%s
+D s-finroo.ads		20200819050645 4ff27390 system.finalization_root%s
+D s-imgint.ads		20200819050645 02dbe0c2 system.img_int%s
+D s-multip.ads		20200819050645 38ac9f73 system.multiprocessors%s
+D s-oscons.ads		20200819111918 49f7716a system.os_constants%s
+D s-osinte.ads		20200819050640 01b3ad47 system.os_interface%s
+D s-parame.ads		20200819050646 4752c4cb system.parameters%s
+D s-secsta.ads		20200819050646 9b3ab94b system.secondary_stack%s
+D s-soflin.ads		20200819050646 a7318a92 system.soft_links%s
+D s-stache.ads		20200819050646 a37c21ec system.stack_checking%s
+D s-stausa.ads		20200819050646 017a0a05 system.stack_usage%s
+D s-stalib.ads		20200819050646 6b7a13f2 system.standard_library%s
+D s-stoele.ads		20200819050646 2dc34a04 system.storage_elements%s
+D s-tasinf.ads		20200819050641 801abd01 system.task_info%s
+D s-taspri.ads		20200819050641 f40ac08d system.task_primitives%s
+D s-taskin.ads		20200819050641 88fba9ad system.tasking%s
+D s-taprob.ads		20200819050641 acd6094d system.tasking.protected_objects%s
+D s-tpoben.ads		20200819050641 60ad3dae system.tasking.protected_objects.entries%s
+D s-tpobop.ads		20200819050641 5f548bb3 system.tasking.protected_objects.operations%s
+D s-traent.ads		20200819050646 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20200819050646 5ecf7212 system.unsigned_types%s
+D s-wchcon.ads		20200819050646 1b7d22d2 system.wch_con%s
+G a e
+G c Z s b [getadormir def_monitor__monitor_sincro 5 16 none]
+G c Z s b [getpermenjar def_monitor__monitor_sincro 6 16 none]
+G c Z s b [donamenjar def_monitor__monitor_sincro 7 17 none]
+G c Z s b [demanacadira def_monitor__monitor_sincro 8 13 none]
+G c Z s b [demanamenjar def_monitor__monitor_sincro 9 13 none]
+G c Z s b [senva def_monitor__monitor_sincro 10 17 none]
+G c Z s b [incrementaadormir def_monitor__monitor_sincro 11 17 none]
+G c Z s b [monitor_sincro__getadormirN def_monitor 5 7 none]
+G c Z s b [monitor_sincro__getadormirP def_monitor 5 7 none]
+G c Z s b [monitor_sincro__getpermenjarN def_monitor 6 7 none]
+G c Z s b [monitor_sincro__getpermenjarP def_monitor 6 7 none]
+G c Z s b [monitor_sincro__donamenjarN def_monitor 7 7 none]
+G c Z s b [monitor_sincro__donamenjarP def_monitor 7 7 none]
+G c Z s b [monitor_sincro__senvaN def_monitor 10 7 none]
+G c Z s b [monitor_sincro__senvaP def_monitor 10 7 none]
+G c Z s b [monitor_sincro__incrementaadormirN def_monitor 11 7 none]
+G c Z s b [monitor_sincro__incrementaadormirP def_monitor 11 7 none]
+G c Z s s [monitor_sincroVDI def_monitor 3 4 none]
+G c Z s s [monitor_sincroVDF def_monitor 3 4 none]
+G c Z s s [monitor_sincroVIP def_monitor 3 4 none]
+X 1 ada.ads
+16K9*Ada 20e8 10|1r6 1r36
+X 7 a-textio.ads
+57K13*Text_IO 727e16 10|1w10 1r40
+508U14*Put_Line 10|21s10
+X 9 def_monitor.ads
+1K9*def_monitor 28l5 28e16 10|3b14 47l5 47t16
+3W19*monitor_sincro 15E7 26l8 26e22 10|5b19 45l8 45t22
+5V16 getADormir{natural} 10|7b16 10l11 10t21
+6V16 getPerMenjar{natural} 10|12b16 15l11 15t23
+7U17 donaMenjar 10|17b17 22t10
+8Y13 demanaCadira 10|24b13 28t10
+9Y13 demanaMenjar 10|30b13 33t10
+10U17 senVa 10|35b17 38l11 38t16
+11U17 incrementaADormir 10|40b17 43l11 43t28
+15i7 aDormir{natural} 10|9r17 42r10 42r21
+16i7 perMenjar{natural} 10|14r17 20r10 20r23 21r37 27r10 27r23
+17i7 cadires{natural} 10|21r69 24r31 26r10 26r21 37r10 37r21
+18i7 plats{natural} 10|19r10 19r19 30r31 32r10 32r19
+20i7 Nre_Cadires{natural}
+21i7 Nans_Adormits{natural}
+22i7 Nans_Afamats{natural}
+23i7 Plats_Preparats{natural}
+24i7 Cadires_Ocupades{natural}
+X 29 s-stausa.ads
+208U14*Initialize 209i<c,__gnat_stack_usage_initialize>22
+273U14*Output_Results 277i<c,__gnat_stack_usage_output_results>22
+
