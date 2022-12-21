@@ -1,0 +1,84 @@
+DELIMITER$$
+CREATE TRIGGER `update_llista` AFTER UPDATE ON `programa`
+FOR EACH ROW
+DO UPDATE llista SET comentari="XXXX" WHERE programa = NEW.idprog;
+
+
+===============
+CREATE TABLE cadena (
+ idcadena INT PRIMARY KEY,
+ descadena VARCHAR(15) 
+);
+
+insert into cadena (idcadena,descadena) values (1,"La 1"),(5,"Telecinco");
+
+CREATE TABLE programa (
+ idprog INT PRIMARY KEY,
+ nomprog VARCHAR(30) ,
+ episodi VARCHAR(30),
+ preu INT 
+);
+
+insert into programa (idprog,nomprog,episodi,preu) values
+(1,"Callejeros","China",30),
+(2,"FIFA","JAP-CRO",20),
+(3,"telediario","Tarde",10);
+
+CREATE TABLE client (
+ idcli INT PRIMARY KEY,
+ nomcli VARCHAR(15),
+ factura INT
+);
+
+insert into client 
+(idcli, nomcli)
+values
+(1,"Pep"),
+(2,"Maria");
+
+CREATE TABLE emissio (
+ programa INT,
+ cadena INT,
+ data DATE, 
+ hora TIME,
+ FOREIGN KEY (programa) REFERENCES programa (idprog),
+ FOREIGN KEY (cadena) REFERENCES cadena(idcadena)
+);
+
+insert into emissio (programa,cadena) values
+(1,1),(1,5),(2,1),(3,1),(3,5);
+
+CREATE TABLE llista (
+ idllista INT PRIMARY KEY,
+ client INT,
+ programa INT,
+ comentari VARCHAR(30),
+ FOREIGN KEY (client) REFERENCES client(idcli),
+ FOREIGN KEY (programa) REFERENCES programa(idprog)
+);
+
+insert into llista 
+(idllista, client, programa)
+values
+(1,1,1),
+(2,1,2),
+(3,1,3),
+(4,2,3)
+
+
+=====
+calculi, per al programa de nom (nomprog) "Callejeros Viajeros",
+ la descripció de les cadenes (DESCADENA) on s'emet i el total 
+d'emissions a cada cadena. El resultat 
+s'ha d'ordenar de major a menor quantitat d'emissions
+
+SELECT descadena, COUNT(cadena) AS emisions
+FROM cadena JOIN emissio
+ON cadena.idcadena = emissio.cadena
+WHERE emissio.programa = (SELECT idprog FROM programa
+			  WHERE nomprog = "Callejeros")
+GROUP BY descadena
+ORDER BY emisions DESC;
+
+
+
