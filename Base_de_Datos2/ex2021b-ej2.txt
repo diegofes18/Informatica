@@ -1,0 +1,33 @@
+
+EJ2:
+
+CREATE VIEW CONSULTA
+AS    
+SELECT persona.idPer as IDPER, (SUM(IFNULL(malatia.riscMal,0))+categoria.RISCCAT)/(COUNT(malatia.riscMal)+1) as MITJANA, MAX(IFNULL(malatia.riscMal,0)) AS MAXRISC, persona.anyPer as ANYPER from persona
+LEFT JOIN dolencies ON persona.idPer=dolencies.idper
+LEFT JOIN malatia ON dolencies.idmal=malatia.idMal
+INNER JOIN categoria ON persona.catper=categoria.idCat
+GROUP by persona.idPer
+
+
+EJ3: 
+
+DELIMITER //
+CREATE PROCEDURE x()
+BEGIN 
+declare acabar int default false;
+declare idper, mitjana, maxrisc, anyper int;
+declare consulta cursor for select * from consulta;
+declare continue handler for not found set acabar=true;
+open consulta;
+etiqueta: LOOP
+	FETCH consulta into idper, mitjana, maxrisc, anyper;
+    if acabar then leave etiqueta; end if;
+    if YEAR(CURDATE())-anyper>=80 or maxrisc=10 then 
+    	UPDATE persona set persona.riscPer=10 where persona.idPer=idper;
+    else
+    	UPDATE persona set persona.riscPer=mitjana where persona.idPer=idper;
+    end if;
+end loop;
+close consulta;
+end;
