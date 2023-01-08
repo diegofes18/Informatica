@@ -87,7 +87,6 @@ func cliente(id int, done chan int) {
 
 	//Funciones
 	accion1 := func() {
-		fmt.Printf("****** %s: Pide Accion 1\n", cliente_nombres[id])
 
 		//Mandamos peticion
 		peticionDeposito <- Deposito{id, Positivo, rand.Intn(5000)}
@@ -96,13 +95,12 @@ func cliente(id int, done chan int) {
 	}
 
 	accion2 := func() {
-		fmt.Printf("****** %s: Pide Accion 2\n", cliente_nombres[id])
 
 		//Mandamos peticion
 		peticionConsulta <- id
 		//Esperamos a que nos confirme
 		consultado := <-okConsulta[id]
-		fmt.Printf(" Lo consultado por %s, es %s: \n", cliente_nombres[id], consultado)
+
 	}
 
 	//Metodo para esperar

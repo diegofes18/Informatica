@@ -16,21 +16,21 @@ type Empty struct{}
 var nom = []string{"Mudet", "Esternuts", "Vergonyós", "Dormilega",
 	"Feliç", "Rondinaire", "Savi"}
 
-//Problema basado en Servidor:
-//Para cada accion: Peticion - Confirmacion
-//Sentarse
+// Problema basado en Servidor:
+// Para cada accion: Peticion - Confirmacion
+// Sentarse
 var demanaCadira = make(chan int)
-var permisCadira [Nans]chan Empty 	//El servidor tiene que saber a quien darle la silla
-									//La forma de indentificarlo es que cada uno tiene uno
-//Comer
+var permisCadira [Nans]chan Empty //El servidor tiene que saber a quien darle la silla
+// La forma de indentificarlo es que cada uno tiene uno
+// Comer
 var tornaCadira = make(chan int)
 var permisAixecarse = make(chan Empty)
-//Irse
+
+// Irse
 var demanaMenjar = make(chan int)
 var permisMenjar = make(chan Empty)
 
-
-//Clase ENANO
+// Clase ENANO
 func nan(nom string, id int, done chan Empty) {
 	fmt.Println("Hola el meu nom és: " + nom)
 
@@ -42,15 +42,15 @@ func nan(nom string, id int, done chan Empty) {
 		//Pide sentarse
 		fmt.Println(nom + " ha arribat de la mina i espera una cadira")
 		demanaCadira <- id
-		<-permisCadira[id]	//Espera SU confirmacion
-		
+		<-permisCadira[id] //Espera SU confirmacion
+
 		//Pide comer
 		fmt.Println(nom + " ja seu i demana ser servit")
 		demanaMenjar <- id
 		<-permisMenjar
 		fmt.Println(nom + " ja menja!!!!!")
 		time.Sleep(time.Duration(rand.Intn(20000)) * time.Millisecond)
-		
+
 		//Pide irse
 		fmt.Println(nom + " ha acabat de menjar i demana permís per aixecar-se")
 		tornaCadira <- id
@@ -61,7 +61,7 @@ func nan(nom string, id int, done chan Empty) {
 	done <- Empty{}
 }
 
-//Clase MAJORDOMO
+// Clase MAJORDOMO
 func majordom() {
 
 	cadires := 4
@@ -105,9 +105,9 @@ func majordom() {
 				}
 				cadires--
 				fmt.Println("******* El majordom fa seure a " + nom[i] + " a la cadira de " + nom[id])
-				
-				permisCadira[i] <- Empty{}  //Permiso al que espera
-				esperen[i] = 0 //Resetear el valor
+
+				permisCadira[i] <- Empty{} //Permiso al que espera
+				esperen[i] = 0             //Resetear el valor
 				numEsperen--
 			}
 		}
@@ -121,7 +121,7 @@ func main() {
 	for i := range permisCadira {
 		permisCadira[i] = make(chan Empty)
 	}
-	
+
 	go majordom()
 	for i := 0; i < Nans; i++ {
 		go nan(nom[i], i, done)
