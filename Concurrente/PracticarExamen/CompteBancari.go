@@ -100,6 +100,7 @@ func cliente(id int, done chan int) {
 		peticionConsulta <- id
 		//Esperamos a que nos confirme
 		consultado := <-okConsulta[id]
+		fmt.Println(consultado)
 
 	}
 
